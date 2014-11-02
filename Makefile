@@ -14,8 +14,8 @@ clean:
 	rm -rf $(BUILD_DIR)
 
 test:
-	docker build . --tag=$(USER)/centos7-autoinstall-iso:$(VARIANT)-$(COMMIT)
-	docker run -v .:/var/build/build
+	docker build --tag=$(USER)/centos7-autoinstall-iso:$(VARIANT)-$(COMMIT) .
+	docker run -v .:/var/build $(USER)/centos7-autoinstall-iso:$(VARIANT)-$(COMMIT)
 
 # we assume Fedora
 prerequisites:
