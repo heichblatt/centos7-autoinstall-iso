@@ -1,0 +1,4 @@
+export BUILD_DIR=./build
+export INPUTISO=./CentOS-7.0-1406-x86_64-DVD.iso
+export OUTPUTISO=CentOS-7.0-x86_64-DVD.iso
+export OUTPUTDIR=.

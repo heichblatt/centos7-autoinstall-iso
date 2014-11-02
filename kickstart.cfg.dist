@@ -1,0 +1,55 @@
+#version=RHEL7
+# Text Mode
+text
+# Logging
+logging --level=info
+# System authorization information
+auth --enableshadow --passalgo=sha512
+# Use CDROM installation media
+cdrom
+# Run the Setup Agent on first boot
+firstboot --disabled
+skipx
+ignoredisk --only-use=vda
+eula --agreed
+# Reboot after install
+reboot --eject
+# Enable SSH daemon
+services --enabled sshd
+# Keyboard layouts
+keyboard --vckeymap=de-nodeadkeys --xlayouts='de (nodeadkeys)'
+# System language
+lang en_US.UTF-8
+# Network information
+network  --bootproto=dhcp --device=eth0 --ipv6=auto --activate --hostname=localhost.localdomain --onboot=yes
+# Root password
+rootpw --lock 
+user --groups=wheel --name=admin --password=changeme --gecos="Administrator"
+# System timezone
+timezone Europe/Berlin --isUtc
+# System bootloader configuration
+bootloader --location=mbr --boot-drive=vda
+# Partition clearing information
+clearpart --all --initlabel --drives=vda
+autopart --type=lvm
+reboot --eject
+
+# Repos
+# We define EPEL here to have it available during installation. For normal use
+# afterwards, we install the epel-release package.
+repo --name=epel --baseurl=http://download.fedoraproject.org/pub/epel/7/x86_64/
+
+# We put the packages to be preinstalled in the %post section below.
+# The process is just much more robust this way.
+%packages
+@core
+%end
+
+%post --log=/root/install-kickstart.log
+set -x
+yum install -y deltarpm epel-release >> /root/yum.log
+yum update -y >> /root/yum.log
+mount /dev/sr0 /mnt
+cp /mnt/scripts/* /root
+umount /mnt
+%end
