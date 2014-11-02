@@ -1,8 +1,16 @@
 # Automatically installing ISOs for CentOS 7
 
 We use modified CentOS installation media to automatically deploy server VMs.
-The main script is called generate-iso.sh
+Most tasks are implemented as Makefile targets.
 Most configuration steps are defined in kickstart.cfg and explained in the comments there.
+
+## Targets
+
+  * clean: remove build directory
+  * prerequisites: check that all necessary software is installed
+  * inputiso: download upstream ISO if necessary
+  * config: copy configuration templates to config files
+  * test: build in Docker
 
 ## Generate a new ISO
 
