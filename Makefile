@@ -60,5 +60,5 @@ generate-output-iso:
 
 config:
 	for cf in $(CONFIG_FILES) ; do \
-		echo cp -i $$cf.dist $$cf ; \
+		cp -vi $$cf.dist $$cf ; \
 		done
